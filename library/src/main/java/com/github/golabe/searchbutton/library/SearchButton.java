@@ -160,7 +160,7 @@ public class SearchButton extends View {
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.SearchButton);
             searchColor = a.getColor(R.styleable.SearchButton_search_color, Color.WHITE);
-            searchBorder = dp2px(a.getDimension(R.styleable.SearchButton_search_border, 2));
+            searchBorder =a.getDimension(R.styleable.SearchButton_search_border, 2F);
             defaultDuration = a.getInt(R.styleable.SearchButton_search_duration, 2000);
             a.recycle();
         }
@@ -169,7 +169,7 @@ public class SearchButton extends View {
 
     private void init() {
         searchPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        searchPaint.setStrokeWidth(searchBorder);
+        searchPaint.setStrokeWidth(dp2px(searchBorder));
         searchPaint.setColor(searchColor);
         searchPaint.setStyle(Paint.Style.STROKE);
         searchPaint.setStrokeCap(Paint.Cap.ROUND);
@@ -231,7 +231,7 @@ public class SearchButton extends View {
             case SEARCHING:
                 pathMeasure.setPath(circlePath, false);
                 float stop = pathMeasure.getLength() * animatedValue;
-                float start = (float) (stop - ((0.5 - Math.abs(animatedValue - 0.5)) * 200f));
+                float start = (float) (stop - ((0.5 - Math.abs(animatedValue - 0.5)) * 100f));
                 @SuppressLint("DrawAllocation") Path dst2 = new Path();
                 pathMeasure.getSegment(start, stop, dst2, true);
                 canvas.drawPath(dst2, searchPaint);

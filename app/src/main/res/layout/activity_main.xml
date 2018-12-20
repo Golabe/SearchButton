@@ -11,10 +11,10 @@
 
     <com.github.golabe.searchbutton.library.SearchButton
         android:id="@+id/search_button"
-        app:search_border="3dp"
+        app:search_border="2dp"
         app:search_color="@android:color/white"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         app:search_duration="500" />
 
