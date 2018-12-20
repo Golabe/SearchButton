@@ -1,6 +1,12 @@
 # SearchButton
 ## SearchButton 带动画的搜索按钮
 
+gif 有点卡，实际效果还不错
+<div align="center">
+
+<image src="https://github.com/Golabe/SearchButton/blob/master/gifs/gif.gif?raw=true" width="400"/>
+</div>
+
 ### 使用
 
 ### gradle
