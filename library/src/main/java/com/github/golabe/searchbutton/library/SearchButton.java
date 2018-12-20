@@ -111,7 +111,10 @@ public class SearchButton extends View {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                myHandler.sendEmptyMessage(0);
+                if (myHandler!=null){
+
+                    myHandler.sendEmptyMessage(0);
+                }
             }
 
             @Override
@@ -291,14 +294,15 @@ public class SearchButton extends View {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        if (myHandler != null) {
-            myHandler = null;
-        }
+
         startAnimator.removeAllUpdateListeners();
         startAnimator.cancel();
         searchingAnimator.removeAllUpdateListeners();
         searchingAnimator.cancel();
         endingAnimator.removeAllUpdateListeners();
         endingAnimator.cancel();
+        if (myHandler != null) {
+            myHandler = null;
+        }
     }
 }
