@@ -66,6 +66,8 @@ public class SearchButton extends View {
 
     private void initHandler() {
         myHandler = new MyHandler();
+
+
     }
 
     @SuppressLint("HandlerLeak")
@@ -79,6 +81,7 @@ public class SearchButton extends View {
                     currentState = State.SEARCHING;
                     startAnimator.removeAllUpdateListeners();
                     searchingAnimator.start();
+
                     break;
                 case SEARCHING:
                     if (isSearchOver) {
@@ -111,8 +114,7 @@ public class SearchButton extends View {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                if (myHandler!=null){
-
+                if (myHandler != null) {
                     myHandler.sendEmptyMessage(0);
                 }
             }
@@ -160,7 +162,7 @@ public class SearchButton extends View {
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.SearchButton);
             searchColor = a.getColor(R.styleable.SearchButton_search_color, Color.WHITE);
-            searchBorder =a.getDimension(R.styleable.SearchButton_search_border, 2F);
+            searchBorder = a.getDimension(R.styleable.SearchButton_search_border, 2F);
             defaultDuration = a.getInt(R.styleable.SearchButton_search_duration, 2000);
             a.recycle();
         }
@@ -173,7 +175,6 @@ public class SearchButton extends View {
         searchPaint.setColor(searchColor);
         searchPaint.setStyle(Paint.Style.STROKE);
         searchPaint.setStrokeCap(Paint.Cap.ROUND);
-
 
     }
 
@@ -199,7 +200,6 @@ public class SearchButton extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-
         int gap = w / 6;
         searchRectF.set(gap, gap, w - gap, h - gap);
         searchPath.addArc(searchRectF, 45, 359.9F);
@@ -214,6 +214,9 @@ public class SearchButton extends View {
 
     }
 
+   private Path dst2 = new Path();
+    private Path dst3 = new Path();
+   private Path dst = new Path();
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -223,8 +226,8 @@ public class SearchButton extends View {
                 canvas.drawPath(searchPath, searchPaint);
                 break;
             case STARTING:
-                pathMeasure.setPath(searchPath, false);
-                @SuppressLint("DrawAllocation") Path dst = new Path();
+                pathMeasure.setPath(circlePath, false);
+                dst.reset();
                 pathMeasure.getSegment(pathMeasure.getLength() * animatedValue, pathMeasure.getLength(), dst, true);
                 canvas.drawPath(dst, searchPaint);
                 break;
@@ -232,13 +235,13 @@ public class SearchButton extends View {
                 pathMeasure.setPath(circlePath, false);
                 float stop = pathMeasure.getLength() * animatedValue;
                 float start = (float) (stop - ((0.5 - Math.abs(animatedValue - 0.5)) * 100f));
-                @SuppressLint("DrawAllocation") Path dst2 = new Path();
+                dst2.reset();
                 pathMeasure.getSegment(start, stop, dst2, true);
                 canvas.drawPath(dst2, searchPaint);
                 break;
             case ENDING:
                 pathMeasure.setPath(searchPath, false);
-                @SuppressLint("DrawAllocation") Path dst3 = new Path();
+                dst3.reset();
                 pathMeasure.getSegment(pathMeasure.getLength() * animatedValue, pathMeasure.getLength(), dst3, true);
                 canvas.drawPath(dst3, searchPaint);
                 break;
@@ -253,6 +256,8 @@ public class SearchButton extends View {
     public void start() {
         currentState = State.STARTING;
         startAnimator.start();
+        pathMeasure.setPath(searchPath, false);
+
     }
 
     public void searchOver() {
@@ -294,7 +299,10 @@ public class SearchButton extends View {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
+        cancel();
+    }
 
+    private void cancel() {
         startAnimator.removeAllUpdateListeners();
         startAnimator.cancel();
         searchingAnimator.removeAllUpdateListeners();
@@ -302,6 +310,7 @@ public class SearchButton extends View {
         endingAnimator.removeAllUpdateListeners();
         endingAnimator.cancel();
         if (myHandler != null) {
+            myHandler.removeCallbacksAndMessages(null);
             myHandler = null;
         }
     }
