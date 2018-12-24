@@ -31,7 +31,7 @@ ext {
     siteUrl = 'https://github.com/Golabe/SearchButton'
     gitUrl = 'https://github.com/Golabe/SearchButton'
     group = "top.golabe.SearchButton"
-    version = "1.0.1"
+    version = "1.0.2"
     id = 'Golabe'
     name = 'yuequan'
     email =  '2643552374@qq.com'

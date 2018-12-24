@@ -256,7 +256,6 @@ public class SearchButton extends View {
     public void start() {
         currentState = State.STARTING;
         startAnimator.start();
-        pathMeasure.setPath(searchPath, false);
 
     }
 
