@@ -12,7 +12,7 @@ gif 有点卡，实际效果还不错
 ### gradle
 
 ```xml
-implementation 'top.golabe.SearchButton:library:1.0.1'
+implementation 'top.golabe.SearchButton:library:1.0.2'
 ```
 
 ### xml
